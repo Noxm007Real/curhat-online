@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Penghiburmu: jangan galau galau lagi deh! 💖</title>
+    <meta name="description" content="Lagi galau?? sini aku kasih tau kalo kamu itu..">
+    <meta name="keywords" content="penghiburmu, galau, sakit hati, putus cinta, cinta, noxm007, sidrumer">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="noxm007">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/TextPlugin.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- Tambahkan SweetAlert -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Comic+Neue:wght@700&display=swap');
+
+        :root {
+            --primary-color: #1A6F45;
+            --secondary-color: #4E5D52;
+            --background-color: #EAF1E1;
+            --dark-bg-color: #0D3020;
+            --dark-text-color: #CFE8D4;
+            --text-color: #1C3D2E;
+            --font-main: 'Poppins', sans-serif;
+            --font-comic: 'Comic Neue', cursive;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            transition: background-color 0.5s ease;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 95%;
+            text-align: center;
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            transform: translateZ(0);
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        .container:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+            font-family: var(--font-comic);
+            letter-spacing: 2px;
+        }
+
+        .input-container {
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            border: 4px solid var(--secondary-color);
+            border-radius: 50px;
+            outline: none;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            background-color: var(--dark-bg-color);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        button:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        #response {
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            margin-top: 2rem;
+            font-weight: bold;
+            opacity: 0;
+            font-family: var(--font-comic);
+            color: var(--accent-color);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+
+        .creator-info {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-size: clamp(0.8rem, 2vw, 1rem);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+            color: #2C3E50;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .creator-info:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .bubble {
+            position: fixed;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: float 15s infinite ease-in-out;
+            z-index: -1;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+            33% { transform: translateY(-50px) rotate(180deg) scale(1.1); }
+            66% { transform: translateY(50px) rotate(-180deg) scale(0.9); }
+        }
+
+        .dark-mode {
+            background-color: #2C3E50;
+            color: #ECF0F1;
+        }
+        
+        .dark-mode .creator-info {
+        color: black;
+        }
+
+        .dark-mode .container {
+            background-color: rgba(44, 62, 80, 0.9);
+        }
+
+        .dark-mode input {
+            background-color: rgba(236, 240, 241, 0.1);
+            color: #ECF0F1;
+        }
+
+        .dark-mode-toggle {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .dark-mode #response {
+        color: white;
+        }
+        #response {
+        color: white;
+        text-shadow: 
+        1px 1px 0 black, 
+        -1px -1px 0 black,  
+        1px -1px 0 black,  
+        -1px 1px 0 black; /* Outline teks */
+        }
+
+        .dark-mode-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .dark-mode .dark-mode-toggle {
+            background-color: var(--dark-bg-color); /* Warna hijau tua */
+            color: var(--dark-text-color);           /* Warna teks yang sesuai */
+        }
+
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.5rem;
+            }
+        }
+
+        .animate__animated {
+            animation-duration: 0.8s;
+        }
+
+        #emoji-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+        .center-response-in-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 200px; /* Tinggi minimum kotak respons */
+            height: 100%;
+        }
+        
+        .hidden {
+            display: none;
+        }
+    
+        .swal-popup {
+            border: none; /* Menghilangkan border */
+            border-radius: 8px; /* Menyesuaikan border-radius */
+        }
+        .swal-title {
+            display: none; /* Menyembunyikan judul */
+        }
+        .swal-text {
+            font-size: 1.2em; /* Ukuran font teks */
+            color: #333; /* Warna teks */
+            text-align: center; /* Menyelaraskan teks di tengah */
+        }
+        .swal2-timer-progress-bar {
+            height: 4px; /* Menyesuaikan tinggi bar progres */
+        }
+        .donation-button {
+        position: fixed;
+        bottom: 1rem;
+        left: 1rem;
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 0.7rem 1.5rem;
+        border-radius: 50px;
+        font-size: clamp(0.8rem, 2vw, 1rem);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        text-decoration: none;
+        color: #2C3E50;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        z-index: 1000;
+        }
+    
+        .donation-button:hover {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        background-color: rgba(255, 216, 61, 0.9);
+        color: #2C3E50;
+        }        
+    </style>
+</head>
+<body>
+    <audio autoplay loop>
+        <source src="OldLove.mp3" type="audio/mp3">
+        Browser Anda tidak mendukung pemutaran audio.
+    </audio>
+    <div class="container animate__animated animate__zoomIn">
+        <h1 id="judul" class="animate__animated animate__bounce"><strong>Galau?, Ceritain Sini</strong></h1>
+        <div class="input-container">
+            <input type="text" id="problem" placeholder="Kamu galau kenapa?" autocomplete="off">
+            <button onclick="generateResponse()" class="animate__animated animate__pulse animate__infinite">Hibur Aku!</button>
+        </div>
+        <div id="response"></div>
+    </div>
+    <a href="https://instagram.com/nelson.oxm007" class="creator-info animate__animated animate__fadeInUp" target="_blank">
+        Deployed by: noxm007 🥁
+    </a>
+    <a href="https://s.id/SwRch" class="donation-button animate__animated animate__fadeInUp" target="_blank">
+    Beliin Kopi ☕
+    </a>
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">🌓</button>
+    <div id="emoji-rain"></div>
+
+    <script>
+        const responses = [
+            "Santai aja, semua orang pernah jelek kok. - Pengkhotbah 3:11",
+            "Jangan khawatir, yang penting hati tetap baik. - 1 Samuel 16:7",
+            "Ngaca, jangan cuma liat fisik, yang penting hati. - Amsal 4:23",
+            "Gak usah sok serius, yang penting kita tetap positif. - Filipi 4:8",
+            "Iya deh, jangan stress, semua ada waktunya. - Pengkhotbah 3:1",
+            "Uang bukan segalanya, yang penting semangat! - Matius 6:33",
+            "Gak perlu galau, setiap orang punya kelebihan. - Mazmur 139:14",
+            "Jelek atau enggak, yang penting percaya diri. - Mazmur 27:3",
+            "Ayo, tetap semangat! Semua bakal baik-baik aja. - Roma 8:28",
+            "Gak usah pusing, yang penting kamu berusaha. - Kolose 3:23",
+            "Tampil apa adanya, yang penting jangan menyerah. - Galatia 6:9",
+            "Jangan stress, coba liat sisi baiknya. - 1 Tesalonika 5:18",
+            "Tetap positif, semua ada masanya kok. - Pengkhotbah 3:1",
+            "Percaya diri aja, semua pasti bisa. - Filipi 4:13",
+            "Jangan terlalu serius, hidup ini harus dinikmati. - Mazmur 118:24",
+            "Yang penting niat baik, semua bisa diusahakan. - Roma 12:21",
+            "Tersenyum aja, setiap orang punya keunikan. - Efesus 2:10",
+            "Jangan galau, semua ada jalan keluarnya. - Yeremia 29:11",
+            "Tetap tenang, kamu lebih dari sekadar tampilan luar. - 2 Korintus 4:16",
+            "Gak usah khawatir, kamu pasti bisa lebih baik. - Filipi 4:6",
+            "Muka mungkin gak sempurna, tapi hati penting. - 1 Samuel 16:7",
+            "Ayo terus berjuang, hasilnya pasti sepadan. - Galatia 6:9",
+            "Tetap semangat, yang penting usaha terus. - Kolose 3:23",
+            "Jangan pernah menyerah, kamu pasti bisa. - Filipi 4:13",
+            "Tiap orang punya kelebihan, fokus aja di situ. - Mazmur 139:14",
+            "Jangan khawatir, semua orang punya masa galau. - 2 Korintus 12:9",
+            "Tetap percaya diri, kamu punya potensi besar. - Efesus 2:10",
+            "Senyum aja, semua bakal jadi lebih baik. - Amsal 17:22",
+            "Yang penting semangat, bukan cuma penampilan. - Roma 12:11",
+            "Tetap berjuang, setiap hari adalah kesempatan. - Mazmur 118:24",
+            "Jangan terlalu fokus pada hal negatif. - Filipi 4:8",
+            "Selalu ada harapan di balik setiap masalah. - Yeremia 29:11",
+            "Ayo, terus berusaha dan jangan menyerah. - Galatia 6:9",
+            "Tampil dengan percaya diri, hasilnya akan mengikuti. - Mazmur 27:3",
+            "Gak perlu galau, semua orang pernah merasa begitu. - Pengkhotbah 3:11",
+            "Fokus pada hal-hal yang membuat kamu bahagia. - Mazmur 37:4",
+            "Jangan biarkan penampilan membuat kamu merasa down. - 2 Korintus 4:16",
+            "Tetap berusaha, hasil baik pasti akan datang. - Amsal 14:23",
+            "Hidup ini penuh dengan kesempatan, ambil aja. - Efesus 5:16",
+            "Selalu ada jalan keluar dari setiap masalah. - 1 Korintus 10:13",
+            "Tetap optimis, masa depan pasti cerah. - Yeremia 29:11",
+            "Gak usah khawatir, kamu lebih dari sekadar penampilan. - Matius 6:25",
+            "Tiap orang punya kelebihan, cari aja di diri sendiri. - Mazmur 139:14",
+            "Ayo, terus maju dan jangan mundur. - Filipi 3:13-14",
+            "Percaya aja, kamu pasti bisa menghadapi semua ini. - Roma 8:37",
+            "Senyum aja, setiap hari adalah peluang baru. - Mazmur 118:24",
+            "Tampil apa adanya, yang penting hati tetap positif. - Filipi 4:8",
+            "Jangan biarkan hal-hal kecil membuatmu merasa buruk. - 1 Petrus 5:7",
+            "Tetap semangat, kamu pasti bisa lebih baik. - Filipi 4:13",
+            "Hidup ini terlalu singkat untuk galau terus. - Pengkhotbah 3:12",
+            "Ayo, terus berjuang dan raih impianmu. - Amsal 16:3",
+            "Fokus pada hal-hal positif di hidupmu. - Filipi 4:8",
+            "Jangan biarkan penampilanmu menurunkan semangat. - 1 Samuel 16:7",
+            "Selalu ada cara untuk merasa lebih baik. - Mazmur 34:18",
+            "Tetap percaya diri, kamu lebih dari yang kamu kira. - Mazmur 139:14",
+            "Jangan biarkan hal-hal kecil membuatmu down. - 1 Petrus 5:7",
+            "Selalu ada harapan, meski dalam keadaan sulit. - Yeremia 29:11",
+            "Tingkatkan semangat, hidup ini penuh dengan peluang. - Efesus 5:16",
+            "Senyum aja, semua akan terasa lebih ringan. - Amsal 17:22",
+            "Jangan terlalu memikirkan penampilan, yang penting hati. - 1 Petrus 3:3-4",
+            "Setiap hari adalah kesempatan baru untuk bangkit. - Mazmur 118:24",
+            "Tetap semangat, apapun yang terjadi. - Roma 12:11",
+            "Jangan biarkan penampilan menentukan nilai dirimu. - 2 Korintus 4:16",
+            "Tiap orang punya keunikan, hargai itu. - Mazmur 139:14",
+            "Gak usah terlalu khawatir, semua ada masanya. - Pengkhotbah 3:1",
+            "Ayo terus berusaha, hasil baik pasti menyusul. - Galatia 6:9",
+            "Tetap optimis, kamu punya kekuatan besar. - Filipi 4:13",
+            "Senyum aja, semuanya pasti jadi lebih baik. - Amsal 17:22",
+            "Jangan biarkan penampilan membuatmu merasa rendah. - Matius 6:25",
+            "Percaya diri aja, semua masalah bisa diatasi. - Roma 8:37",
+            "Jangan terlalu fokus pada hal-hal negatif. - Filipi 4:8",
+            "Selalu ada solusi untuk setiap masalah. - 1 Korintus 10:13",
+            "Tetap semangat, masa depan pasti cerah. - Yeremia 29:11",
+            "Gak usah terlalu khawatir, kamu pasti bisa. - Matius 6:34",
+            "Tiap orang punya tantangan, tetap berjuang. - 2 Timotius 4:7",
+            "Senyum aja, hidup ini penuh dengan kesempatan. - Amsal 17:22",
+            "Fokus pada hal-hal positif dan terus maju. - Filipi 4:8",
+            "Jangan biarkan hal-hal kecil membuatmu down. - 1 Petrus 5:7",
+            "Selalu ada harapan, meski dalam kesulitan. - Roma 12:12",
+            "Ayo, tetap semangat dan terus berjuang. - Galatia 6:9",
+            "Percaya diri aja, semua akan terasa lebih mudah. - Filipi 4:13",
+            "Jangan biarkan penampilan menurunkan semangatmu. - 1 Samuel 16:7",
+            "Tiap hari adalah kesempatan baru untuk berkembang. - Mazmur 118:24",
+            "Selalu ada cara untuk merasa lebih baik. - Mazmur 34:18",
+            "Tetap positif, masa depan pasti lebih baik. - Roma 8:28",
+            "Senyum aja, semuanya bakal lebih cerah. - Amsal 17:22",
+            "Jangan khawatir, kamu pasti bisa menghadapi semuanya. - Yesaya 41:10",
+            "Fokus pada hal-hal yang membuatmu bahagia. - Filipi 4:4",
+            "Ayo terus maju dan jangan pernah menyerah. - Ibrani 12:1"
+        ];
+
+        
+        gsap.registerPlugin(TextPlugin);
+
+        function generateResponse() {
+            const problem = document.getElementById('problem').value.trim();
+            const responseElement = document.getElementById('response');
+            const judulElement = document.getElementById('judul');
+            const inputContainer = document.querySelector('.input-container');
+            const h1 = document.querySelector('h1');
+            const creatorInfo = document.querySelector('.creator-info');
+
+            if (problem === '') {
+                showToast('Eh, isi dulu dong masalah kamu!');
+                return;
+            }
+
+            inputContainer.classList.add('hidden');
+            judulElement.innerText = "yaa gimana ya..."
+            judulElement.classList.add('judul')
+            responseElement.classList.add('center-response-in-container');
+            
+            const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+            
+            gsap.to(responseElement, {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                text: randomResponse,
+                fontSize: "2em",
+                ease: "back.out(1.7)"
+            });
+
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+
+            emoticonRain();
+        }
+
+        function createBubbles() {
+            const bubbleCount = 20;
+            for (let i = 0; i < bubbleCount; i++) {
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+                const size = Math.random() * 100 + 50;
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.left = `${Math.random() * 100}vw`;
+                bubble.style.top = `${Math.random() * 100}vh`;
+                bubble.style.animationDelay = `${Math.random() * 15}s`;
+                document.body.appendChild(bubble);
+            }
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDarkMode);
+        }
+
+        function showToast(message) {
+            Swal.fire({
+                icon: 'info',
+                title: ' ',
+                text: message,
+                showConfirmButton: false,
+                timer: 3000, // Durasi tampil alert
+                timerProgressBar: true,
+                background: 'white', // Menghilangkan background
+                color: '#333', // Warna teks
+                customClass: {
+                    popup: 'swal-popup',
+                    title: 'swal-title',
+                    text: 'swal-text'
+                },
+                didOpen: () => {
+                    Swal.getHtmlContainer().querySelector('.swal2-timer-progress-bar').style.backgroundColor = '#ff6b6b';
+                }
+            });
+        }
+
+
+
+        function emoticonRain() {
+            const emojis = ['💖', '😇', '🔥', '🌟', '❤️', '🌈', '💪', '✨', '🌺'];
+
+            const rainContainer = document.getElementById('emoji-rain');
+            rainContainer.innerHTML = '';
+            for (let i = 0; i < 50; i++) {
+                const emoji = document.createElement('div');
+                emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                emoji.style.position = 'absolute';
+                emoji.style.left = `${Math.random() * 100}vw`;
+                emoji.style.top = '-50px';
+                emoji.style.fontSize = `${Math.random() * 30 + 20}px`;
+                emoji.style.opacity = Math.random() * 0.5 + 0.5;
+                rainContainer.appendChild(emoji);
+                gsap.to(emoji, {
+                    y: '120vh',
+                    rotation: Math.random() * 360,
+                    duration: Math.random() * 3 + 2,
+                    ease: 'none',
+                    onComplete: () => rainContainer.removeChild(emoji)
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            createBubbles();
+            const savedDarkMode = localStorage.getItem('darkMode');
+            if (savedDarkMode === 'true') {
+                document.body.classList.add('dark-mode');
+            }
+            gsap.registerPlugin(ScrollTrigger);
+            gsap.to('.bubble', {
+                y: '100vh',
+                duration: 30,
+                ease: 'none',
+                stagger: 0.5,
+                repeat: -1,
+                yoyo: true
+            });
+        });
+
+        window.addEventListener('resize', () => {
+            gsap.to('.container', {
+                width: window.innerWidth < 600 ? '95%' : '800px',
+                duration: 0.5
+            });
+        });
+    </script>
+</body>
+</html>
